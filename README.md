@@ -11,17 +11,15 @@ The app fetches and displays Bitcoin’s current exchange rate (in EUR) along wi
 - **Detail Screen:**  
   Shows the Bitcoin price on a selected day in EUR, USD, and GBP with a persistent top bar featuring a back button and the day’s date.
 
----
+### Screenshots
 
-## Screenshots
+#### Android
+<img alt="android_home" src="images/home_android.png" height="50%" width="50%"/>
+<img alt="android_details" src="images/details_android.png" height="50%" width="50%"/>
 
-### Android
-![android_home](images/home_android.png)
-![ios_details](images/details_android.png)
-
-### iOS
-![ios_home](images/home_ios.png)
-![ios_details](images/details_ios.png)
+#### iOS
+<img alt="ios_home" src="images/home_ios.png" height="50%" width="50%"/>
+<img alt="ios_details" src="images/details_ios.png" height="50%" width="50%"/>
 
 ---
 
