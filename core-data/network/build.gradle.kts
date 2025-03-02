@@ -2,8 +2,6 @@ import com.codingfeline.buildkonfig.compiler.FieldSpec
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
-// todo conventions
-// todo dep review /module
 plugins {
 	alias(libs.plugins.kotlinMultiplatform)
 	alias(libs.plugins.androidLibrary)
@@ -32,9 +30,7 @@ kotlin {
 
 	sourceSets {
 		iosMain.dependencies {
-			// todo write unit tests
-			// todo ci pipeline
-			// tood check task
+			// todo write unit tests + run on CI
 			implementation(libs.ktor.client.darwin)
 		}
 		androidMain.dependencies {

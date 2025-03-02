@@ -43,5 +43,3 @@ include(":core-ui:design-system")
 
 include(":feature:home")
 include(":feature:details")
-
-// todo ktlint run

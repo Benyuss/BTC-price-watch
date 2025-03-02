@@ -1,4 +1,3 @@
-import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
@@ -11,7 +10,6 @@ plugins {
 
 kotlin {
 	androidTarget {
-		@OptIn(ExperimentalKotlinGradlePluginApi::class)
 		compilerOptions {
 			jvmTarget.set(JvmTarget.JVM_11)
 		}
@@ -23,7 +21,7 @@ kotlin {
 		iosSimulatorArm64(),
 	).forEach { iosTarget ->
 		iosTarget.binaries.framework {
-			baseName = "feature-home" // todo review if this is removable from other modules
+			baseName = "feature-home"
 			isStatic = true
 		}
 	}
@@ -56,7 +54,6 @@ kotlin {
 	}
 }
 
-// todo review configs
 android {
 	namespace = "com.n26.cointracker.feature.home"
 	compileSdk = 35
