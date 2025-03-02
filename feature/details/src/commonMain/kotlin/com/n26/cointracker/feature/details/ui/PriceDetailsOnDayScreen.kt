@@ -37,91 +37,94 @@ import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun PriceDetailsOnDayScreen(
-    dateTimeStamp: Long,
-    navigateBack: () -> Unit,
+	dateTimeStamp: Long,
+	navigateBack: () -> Unit,
 ) {
-    val viewModel = koinViewModel<PriceDetailsOnDayViewModel>()
-    val resource by viewModel.state.collectAsStateWithLifecycle()
+	val viewModel = koinViewModel<PriceDetailsOnDayViewModel>()
+	val resource by viewModel.state.collectAsStateWithLifecycle()
 
-    DisposableEffect(Unit) {
-        viewModel.refresh(dateTimeStamp)
-        onDispose { }
-    }
+	DisposableEffect(Unit) {
+		viewModel.refresh(dateTimeStamp)
+		onDispose { }
+	}
 
-    PriceDetailsOnDayScreenContent(resource, navigateBack)
+	PriceDetailsOnDayScreenContent(resource, navigateBack)
 }
 
 @Composable
 internal fun PriceDetailsOnDayScreenContent(
-    resource: Resource<PriceOnDayDto>,
-    navigateBack: () -> Unit
+	resource: Resource<PriceOnDayDto>,
+	navigateBack: () -> Unit,
 ) {
-    val navigationBarColor = Color.White
+	val navigationBarColor = Color.White
 
-    Scaffold(
-        modifier = Modifier
-            .background(navigationBarColor)
-            .systemBarsPadding(),
-        topBar = {
-            ChildScreenStatusBar(
-                onBackButtonClick = navigateBack,
-                title = when (resource) {
-                    is Resource.Success -> resource.data.date
-                    else -> stringResource(Res.string.loading)
-                },
-                backgroundColor = navigationBarColor,
-                titleColor = DesignSystemTheme.colors.brandColor
-            )
-        },
-    ) { innerPadding ->
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(innerPadding)
-                .padding(DesignSystemTheme.measurements.spacing4)
-        ) {
-            ResourceContent(
-                resource = resource,
-            ) { detailsData ->
-                PriceDetailsContent(detailsData)
-            }
-        }
-    }
+	Scaffold(
+		modifier = Modifier
+			.background(navigationBarColor)
+			.systemBarsPadding(),
+		topBar = {
+			ChildScreenStatusBar(
+				onBackButtonClick = navigateBack,
+				title = when (resource) {
+					is Resource.Success -> resource.data.date
+					else -> stringResource(Res.string.loading)
+				},
+				backgroundColor = navigationBarColor,
+				titleColor = DesignSystemTheme.colors.brandColor,
+			)
+		},
+	) { innerPadding ->
+		Box(
+			modifier = Modifier
+				.fillMaxSize()
+				.padding(innerPadding)
+				.padding(DesignSystemTheme.measurements.spacing4),
+		) {
+			ResourceContent(
+				resource = resource,
+			) { detailsData ->
+				PriceDetailsContent(detailsData)
+			}
+		}
+	}
 }
 
 @Composable
 private fun PriceDetailsContent(
-    details: PriceOnDayDto,
-    modifier: Modifier = Modifier,
+	details: PriceOnDayDto,
+	modifier: Modifier = Modifier,
 ) {
-    Column(
-        modifier = modifier
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState()),
-        verticalArrangement = Arrangement.spacedBy(DesignSystemTheme.measurements.spacing6),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        PriceInfoRow(label = stringResource(Res.string.usd), price = details.usd)
-        PriceInfoRow(label = stringResource(Res.string.gbp), price = details.gbp)
-        PriceInfoRow(label = stringResource(Res.string.eur), price = details.eur)
-    }
+	Column(
+		modifier = modifier
+			.fillMaxSize()
+			.verticalScroll(rememberScrollState()),
+		verticalArrangement = Arrangement.spacedBy(DesignSystemTheme.measurements.spacing6),
+		horizontalAlignment = Alignment.CenterHorizontally,
+	) {
+		PriceInfoRow(label = stringResource(Res.string.usd), price = details.usd)
+		PriceInfoRow(label = stringResource(Res.string.gbp), price = details.gbp)
+		PriceInfoRow(label = stringResource(Res.string.eur), price = details.eur)
+	}
 }
 
 @Composable
-private fun PriceInfoRow(label: String, price: Double) {
-    Column(
-        modifier = Modifier.fillMaxWidth(),
-    ) {
-        Text(
-            text = label,
-            style = MaterialTheme.typography.headlineSmall,
-            color = Color.DarkGray
-        )
-        Text(
-            text = price.toString(),
-            style = MaterialTheme.typography.displaySmall,
-            color = DesignSystemTheme.colors.brandColor,
-            textAlign = TextAlign.End
-        )
-    }
+private fun PriceInfoRow(
+	label: String,
+	price: Double,
+) {
+	Column(
+		modifier = Modifier.fillMaxWidth(),
+	) {
+		Text(
+			text = label,
+			style = MaterialTheme.typography.headlineSmall,
+			color = Color.DarkGray,
+		)
+		Text(
+			text = price.toString(),
+			style = MaterialTheme.typography.displaySmall,
+			color = DesignSystemTheme.colors.brandColor,
+			textAlign = TextAlign.End,
+		)
+	}
 }

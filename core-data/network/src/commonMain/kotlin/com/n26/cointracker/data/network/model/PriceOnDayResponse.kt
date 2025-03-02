@@ -5,12 +5,12 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class PriceOnDayResponse(
-    @SerialName("market_data")
-    val marketData: MarketDataResponse,
+	@SerialName("market_data")
+	val marketData: MarketDataResponse,
 )
 
 @Serializable
 data class MarketDataResponse(
-    @SerialName("current_price")
-    val currentPrice: Map<String, Double>,
+	@SerialName("current_price")
+	val currentPrice: Map<String, Double>,
 )

@@ -32,99 +32,99 @@ import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun ChildScreenStatusBar(
-    onBackButtonClick: () -> Unit,
-    title: String,
-    modifier: Modifier = Modifier,
-    icon: StatusBarIcon? = StatusBarIcon.Back,
-    rightIcon: ImageVector? = null,
-    backgroundColor: Color = Color.White,
-    componentPaddingTop: Dp = 12.dp,
-    horizontalPadding: Dp = 16.dp,
-    verticalPadding: Dp = 8.dp,
-    iconPadding: Dp = 8.dp,
-    iconSize: Dp = 24.dp,
-    iconColor: Color = Color.Gray,
-    titleColor: Color = Color.Gray,
-    titleTextStyle: TextStyle = MaterialTheme.typography.titleMedium,
-    titlePadding: Dp = 8.dp,
-    topBarDividerColor: Color = Color.LightGray,
-    onRightIconClick: (() -> Unit)? = null,
+	onBackButtonClick: () -> Unit,
+	title: String,
+	modifier: Modifier = Modifier,
+	icon: StatusBarIcon? = StatusBarIcon.Back,
+	rightIcon: ImageVector? = null,
+	backgroundColor: Color = Color.White,
+	componentPaddingTop: Dp = 12.dp,
+	horizontalPadding: Dp = 16.dp,
+	verticalPadding: Dp = 8.dp,
+	iconPadding: Dp = 8.dp,
+	iconSize: Dp = 24.dp,
+	iconColor: Color = Color.Gray,
+	titleColor: Color = Color.Gray,
+	titleTextStyle: TextStyle = MaterialTheme.typography.titleMedium,
+	titlePadding: Dp = 8.dp,
+	topBarDividerColor: Color = Color.LightGray,
+	onRightIconClick: (() -> Unit)? = null,
 ) {
-    Column(
-        modifier = modifier
-            .fillMaxWidth()
-            .background(backgroundColor)
-            .padding(top = componentPaddingTop),
-    ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(
-                    vertical = verticalPadding,
-                    horizontal = horizontalPadding,
-                ),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            val measuredIconSize = iconPadding.plus(iconSize)
+	Column(
+		modifier = modifier
+			.fillMaxWidth()
+			.background(backgroundColor)
+			.padding(top = componentPaddingTop),
+	) {
+		Row(
+			modifier = Modifier
+				.fillMaxWidth()
+				.padding(
+					vertical = verticalPadding,
+					horizontal = horizontalPadding,
+				),
+			horizontalArrangement = Arrangement.SpaceBetween,
+			verticalAlignment = Alignment.CenterVertically,
+		) {
+			val measuredIconSize = iconPadding.plus(iconSize)
 
-            icon?.let {
-                val actionIcon = when (icon) {
-                    StatusBarIcon.Back -> Icons.AutoMirrored.Filled.ArrowBack
-                    StatusBarIcon.Close -> Icons.Filled.Close
-                }
-                Icon(
-                    modifier = Modifier
-                        .size(measuredIconSize)
-                        .clickable {
-                            onBackButtonClick()
-                        },
-                    imageVector = actionIcon,
-                    contentDescription = stringResource(Res.string.back),
-                    tint = iconColor,
-                )
-            }
+			icon?.let {
+				val actionIcon = when (icon) {
+					StatusBarIcon.Back -> Icons.AutoMirrored.Filled.ArrowBack
+					StatusBarIcon.Close -> Icons.Filled.Close
+				}
+				Icon(
+					modifier = Modifier
+						.size(measuredIconSize)
+						.clickable {
+							onBackButtonClick()
+						},
+					imageVector = actionIcon,
+					contentDescription = stringResource(Res.string.back),
+					tint = iconColor,
+				)
+			}
 
-            rightIcon?.let {
-                Spacer(modifier = Modifier.size(measuredIconSize))
-            }
-            Text(
-                modifier = Modifier
-                    .weight(1f)
-                    .padding(horizontal = titlePadding),
-                text = title,
-                overflow = TextOverflow.Ellipsis,
-                maxLines = 1,
-                style = titleTextStyle,
-                textAlign = TextAlign.Center,
-                color = titleColor,
-            )
-            icon?.let {
-                Spacer(modifier = Modifier.size(measuredIconSize))
-            }
+			rightIcon?.let {
+				Spacer(modifier = Modifier.size(measuredIconSize))
+			}
+			Text(
+				modifier = Modifier
+					.weight(1f)
+					.padding(horizontal = titlePadding),
+				text = title,
+				overflow = TextOverflow.Ellipsis,
+				maxLines = 1,
+				style = titleTextStyle,
+				textAlign = TextAlign.Center,
+				color = titleColor,
+			)
+			icon?.let {
+				Spacer(modifier = Modifier.size(measuredIconSize))
+			}
 
-            rightIcon?.let {
-                Icon(
-                    modifier = Modifier
-                        .size(measuredIconSize)
-                        .clickable {
-                            onRightIconClick?.invoke()
-                        },
-                    imageVector = rightIcon,
-                    contentDescription = null,
-                    tint = iconColor,
-                )
-            }
-        }
+			rightIcon?.let {
+				Icon(
+					modifier = Modifier
+						.size(measuredIconSize)
+						.clickable {
+							onRightIconClick?.invoke()
+						},
+					imageVector = rightIcon,
+					contentDescription = null,
+					tint = iconColor,
+				)
+			}
+		}
 
-        HorizontalDivider(
-            thickness = 1.dp,
-            color = topBarDividerColor,
-        )
-    }
+		HorizontalDivider(
+			thickness = 1.dp,
+			color = topBarDividerColor,
+		)
+	}
 }
 
 enum class StatusBarIcon {
-    Back,
-    Close,
+	Back,
+	Close,
 }

@@ -10,26 +10,27 @@ import com.n26.core.common.ktx.toUtcDate
 import com.n26.data.common.BaseInteractor
 
 internal class GetPriceOnDayInteractorImpl(
-    private val dispatchers: N26Dispatchers,
-    private val priceRemoteDataSource: PriceRemoteDataSource,
-    private val inMemoryCache: InMemoryCacheWithKeys<PriceOnDayDto>,
+	private val dispatchers: N26Dispatchers,
+	private val priceRemoteDataSource: PriceRemoteDataSource,
+	private val inMemoryCache: InMemoryCacheWithKeys<PriceOnDayDto>,
 ) : BaseInteractor(GetPriceOnDayInteractor::class),
-    GetPriceOnDayInteractor {
+	GetPriceOnDayInteractor {
+	override suspend operator fun invoke(
+		timestamp: Long,
+	): Result<PriceOnDayDto> = execute(
+		dispatcher = dispatchers.io,
+		readCache = { inMemoryCache.getState(timestamp.toString()) },
+		writeCache = { inMemoryCache.setState(timestamp.toString(), it) },
+	) {
+		val result = priceRemoteDataSource.getPricesForDate(timestamp.toUtcDate())
+		val prices =
+			PriceOnDayDto(
+				usd = result["usd"] ?: 0.0,
+				eur = result["eur"] ?: 0.0,
+				gbp = result["gbp"] ?: 0.0,
+				date = timestamp.toLocalDate().toString(),
+			)
 
-    override suspend operator fun invoke(timestamp: Long): Result<PriceOnDayDto> =
-        execute(
-            dispatcher = dispatchers.io,
-            readCache = { inMemoryCache.getState(timestamp.toString()) },
-            writeCache = { inMemoryCache.setState(timestamp.toString(), it) }
-        ) {
-            val result = priceRemoteDataSource.getPricesForDate(timestamp.toUtcDate())
-            val prices = PriceOnDayDto(
-                usd = result["usd"] ?: 0.0,
-                eur = result["eur"] ?: 0.0,
-                gbp = result["gbp"] ?: 0.0,
-                date = timestamp.toLocalDate().toString()
-            )
-
-            Result.success(prices)
-        }
+		Result.success(prices)
+	}
 }

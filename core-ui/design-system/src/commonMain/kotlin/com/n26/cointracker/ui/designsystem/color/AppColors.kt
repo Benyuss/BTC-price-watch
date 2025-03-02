@@ -7,8 +7,11 @@ import androidx.compose.ui.graphics.Color
 internal val LocalColors: ProvidableCompositionLocal<AppColors> = staticCompositionLocalOf { LightColors }
 
 internal val LightColors: AppColors = AppColors(
-    brandColor = Color(0xFF009688),
-    secondaryColor = Color(0xFFE6E6E6)
+	brandColor = Color(0xFF009688),
+	secondaryColor = Color(0xFFE6E6E6),
 )
 
-data class AppColors(val brandColor: Color, val secondaryColor: Color)
+data class AppColors(
+	val brandColor: Color,
+	val secondaryColor: Color,
+)

@@ -4,6 +4,4 @@ import com.n26.cointracker.core.domain.model.CurrentPriceDto
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class CurrentPriceResponse(
-    val bitcoin: CurrentPriceDto
-)
+data class CurrentPriceResponse(val bitcoin: CurrentPriceDto)

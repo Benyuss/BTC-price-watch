@@ -15,81 +15,81 @@ import kotlin.time.Duration.Companion.days
 @Preview
 @Composable
 internal fun HomeScreenContentPreview() {
-    val date = Clock.System.todayIn(TimeZone.UTC)
+	val date = Clock.System.todayIn(TimeZone.UTC)
 
-    Surface {
-        HomeScreenContent(
-            currentPriceUiState = Resource.Success(1.0),
-            historicalPricesUiState = Resource.Success(
-                listOf(
-                    HistoricalPriceDto(
-                        utcTimestamp = date.atStartOfDayIn(TimeZone.UTC).epochSeconds,
-                        localDate = date,
-                        price = 100.5,
-                    ),
-                    HistoricalPriceDto(
-                        utcTimestamp = date.atStartOfDayIn(TimeZone.UTC).minus(1.days).epochSeconds,
-                        localDate = date,
-                        price = 100.7,
-                    ),
-                    HistoricalPriceDto(
-                        utcTimestamp = date.atStartOfDayIn(TimeZone.UTC).minus(2.days).epochSeconds,
-                        localDate = date,
-                        price = 100.9,
-                    )
-                )
-            ),
-            navigateToDetails = {}
-        )
-    }
+	Surface {
+		HomeScreenContent(
+			currentPriceUiState = Resource.Success(1.0),
+			historicalPricesUiState = Resource.Success(
+				listOf(
+					HistoricalPriceDto(
+						utcTimestamp = date.atStartOfDayIn(TimeZone.UTC).epochSeconds,
+						localDate = date,
+						price = 100.5,
+					),
+					HistoricalPriceDto(
+						utcTimestamp = date.atStartOfDayIn(TimeZone.UTC).minus(1.days).epochSeconds,
+						localDate = date,
+						price = 100.7,
+					),
+					HistoricalPriceDto(
+						utcTimestamp = date.atStartOfDayIn(TimeZone.UTC).minus(2.days).epochSeconds,
+						localDate = date,
+						price = 100.9,
+					),
+				),
+			),
+			navigateToDetails = {},
+		)
+	}
 }
 
 @Preview
 @Composable
 internal fun HomeScreenContentLoadingAllPreview() {
-    Surface {
-        HomeScreenContent(
-            currentPriceUiState = Resource.Loading,
-            historicalPricesUiState = Resource.Loading,
-            navigateToDetails = {}
-        )
-    }
+	Surface {
+		HomeScreenContent(
+			currentPriceUiState = Resource.Loading,
+			historicalPricesUiState = Resource.Loading,
+			navigateToDetails = {},
+		)
+	}
 }
 
 @Preview
 @Composable
 internal fun HomeScreenContentLoadingHistoricalPricesPreview() {
-    Surface {
-        HomeScreenContent(
-            currentPriceUiState = Resource.Success(1.0),
-            historicalPricesUiState = Resource.Loading,
-            navigateToDetails = {}
-        )
-    }
+	Surface {
+		HomeScreenContent(
+			currentPriceUiState = Resource.Success(1.0),
+			historicalPricesUiState = Resource.Loading,
+			navigateToDetails = {},
+		)
+	}
 }
 
 @Preview
 @Composable
 internal fun HomeScreenContentEmptyHistoricalPricesPreview() {
-    Surface {
-        HomeScreenContent(
-            currentPriceUiState = Resource.Success(1.0),
-            historicalPricesUiState = Resource.Success(
-                emptyList()
-            ),
-            navigateToDetails = {}
-        )
-    }
+	Surface {
+		HomeScreenContent(
+			currentPriceUiState = Resource.Success(1.0),
+			historicalPricesUiState = Resource.Success(
+				emptyList(),
+			),
+			navigateToDetails = {},
+		)
+	}
 }
 
 @Preview
 @Composable
 internal fun HomeScreenContentErrorPreview() {
-    Surface {
-        HomeScreenContent(
-            currentPriceUiState = Resource.Error(RuntimeException("Error")),
-            historicalPricesUiState = Resource.Error(RuntimeException("Error")),
-            navigateToDetails = {}
-        )
-    }
+	Surface {
+		HomeScreenContent(
+			currentPriceUiState = Resource.Error(RuntimeException("Error")),
+			historicalPricesUiState = Resource.Error(RuntimeException("Error")),
+			navigateToDetails = {},
+		)
+	}
 }

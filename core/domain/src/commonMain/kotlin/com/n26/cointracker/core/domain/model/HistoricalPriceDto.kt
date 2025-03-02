@@ -5,7 +5,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class HistoricalPriceDto(
-    val utcTimestamp: Long,
-    val localDate: LocalDate,
-    val price: Double
+	val utcTimestamp: Long,
+	val localDate: LocalDate,
+	val price: Double,
 )

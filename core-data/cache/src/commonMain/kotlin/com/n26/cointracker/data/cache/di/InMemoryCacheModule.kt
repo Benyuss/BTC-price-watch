@@ -11,10 +11,11 @@ import com.n26.cointracker.data.cache.price.PriceOnDayCache
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
-val inMemoryCacheModule = module {
-    single<InMemoryCache<CurrentPriceDto>>(named(DiConstants.CACHE_KEY_CURRENT_PRICE)) { CurrentPriceCache() }
-    single<InMemoryCache<List<HistoricalPriceDto>>>(named(DiConstants.CACHE_KEY_HISTORICAL_PRICE)) {
-        HistoricalPriceCache()
-    }
-    single<InMemoryCacheWithKeys<PriceOnDayDto>>(named(DiConstants.CACHE_KEY_PRICE_ON_DAY)) { PriceOnDayCache() }
-}
+val inMemoryCacheModule =
+	module {
+		single<InMemoryCache<CurrentPriceDto>>(named(DiConstants.CACHE_KEY_CURRENT_PRICE)) { CurrentPriceCache() }
+		single<InMemoryCache<List<HistoricalPriceDto>>>(named(DiConstants.CACHE_KEY_HISTORICAL_PRICE)) {
+			HistoricalPriceCache()
+		}
+		single<InMemoryCacheWithKeys<PriceOnDayDto>>(named(DiConstants.CACHE_KEY_PRICE_ON_DAY)) { PriceOnDayCache() }
+	}

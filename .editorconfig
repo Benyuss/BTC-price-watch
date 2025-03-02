@@ -1,4 +1,77 @@
 root = true
 
 [*]
+# General editor settings
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+# Universal code style settings
+indent_style = tab
+indent_size = 4
+max_line_length = 140
+
+#  Disable wildcard imports entirely
 ij_kotlin_name_count_to_use_star_import = 2147483647
+ij_kotlin_name_count_to_use_star_import_for_members = 2147483647
+ij_kotlin_packages_to_use_import_on_demand = unset
+
+# Exclude generated files
+[{.idea,build}/**]
+indent_size = 4
+trim_trailing_whitespace = false
+insert_final_newline = false
+
+# Kotlin specific settings
+[*.{kt,kts}]
+indent_style = tab
+indent_size = 4
+continuation_indent_size = 4
+max_line_length = 140
+
+ij_kotlin_code_style_defaults = KOTLIN_OFFICIAL
+ij_kotlin_allow_trailing_comma = true
+ij_kotlin_allow_trailing_comma_on_call_site = true
+ktlint_standard_backing-property-naming = disabled
+
+# Wrapping rules
+ktlint_chain_method_rule_force_multiline_when_chain_operator_count_greater_or_equal_than = 2147483647
+ktlint_class_signature_rule_force_multiline_when_parameter_count_greater_or_equal_than = 2
+ktlint_function_signature_rule_force_multiline_when_parameter_count_greater_or_equal_than = 1
+ktlint_function_signature_body_expression_wrapping = default
+ktlint_standard_multiline-expression-wrapping = disabled
+
+# Expression wrapping rules (custom settings)
+ktlint_function_signature_wrapping = disabled
+ktlint_parameter_list_wrapping = disabled
+
+# Composable rules
+ktlint_function_naming_ignore_when_annotated_with = Composable
+ktlint_compose_vm-forwarding-check = disabled
+ktlint_compose_compositionlocal-allowlist = disabled
+ktlint_compose_disallow_material2 = true
+ktlint_compose_allowed_composable_function_names = *ViewModel
+
+# Specific rules for Test files
+[*Test.kt]
+max_line_length = off
+
+# Jetpack Compose specific rules
+[*.{kt,kts}]
+ij_kotlin_wrap_parameters = false
+ij_kotlin_wrap_arguments = false
+ij_kotlin_wrap_function_literals = false
+
+# XML specific settings for Android layouts
+[*.xml]
+indent_style = space
+indent_size = 2
+
+# Markdown and text file settings
+[*.md]
+max_line_length = 120
+trim_trailing_whitespace = false
+
+[*.{txt,markdown}]
+trim_trailing_whitespace = false

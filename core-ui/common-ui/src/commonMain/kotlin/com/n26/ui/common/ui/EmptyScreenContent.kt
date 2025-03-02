@@ -11,12 +11,12 @@ import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun EmptyScreenContent(
-    modifier: Modifier = Modifier,
+	modifier: Modifier = Modifier,
 ) {
-    Box(
-        modifier = modifier,
-        contentAlignment = Alignment.Center,
-    ) {
-        Text(stringResource(Res.string.noDataAvailable))
-    }
+	Box(
+		modifier = modifier,
+		contentAlignment = Alignment.Center,
+	) {
+		Text(stringResource(Res.string.noDataAvailable))
+	}
 }

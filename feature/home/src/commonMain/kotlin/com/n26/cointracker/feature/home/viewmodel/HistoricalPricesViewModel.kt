@@ -9,19 +9,17 @@ import kotlinx.datetime.TimeZone
 import kotlinx.datetime.minus
 import kotlinx.datetime.todayIn
 
-class HistoricalPricesViewModel(
-    private val getHistoricalPriceInteractor: GetHistoricalPriceInteractor
-) : BaseViewModel<List<HistoricalPriceDto>>() {
+class HistoricalPricesViewModel(private val getHistoricalPriceInteractor: GetHistoricalPriceInteractor) :
+	BaseViewModel<List<HistoricalPriceDto>>() {
+	fun refresh() {
+		refreshData {
+			val today = Clock.System.todayIn(TimeZone.UTC)
+			val rangeStart = today.minus(DatePeriod(days = PRICE_PERIOD_DAYS))
+			getHistoricalPriceInteractor(rangeStart, today)
+		}
+	}
 
-    fun refresh() {
-        refreshData {
-            val today = Clock.System.todayIn(TimeZone.UTC)
-            val rangeStart = today.minus(DatePeriod(days = PRICE_PERIOD_DAYS))
-            getHistoricalPriceInteractor(rangeStart, today)
-        }
-    }
-
-    companion object {
-        const val PRICE_PERIOD_DAYS = 14
-    }
+	companion object {
+		const val PRICE_PERIOD_DAYS = 14
+	}
 }

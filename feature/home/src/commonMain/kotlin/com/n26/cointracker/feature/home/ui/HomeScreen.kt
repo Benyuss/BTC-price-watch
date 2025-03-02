@@ -53,180 +53,182 @@ import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun HomeScreen(
-    navigateToDetails: (date: Long) -> Unit
+	navigateToDetails: (date: Long) -> Unit,
 ) {
-    val currentPriceViewModel = koinViewModel<CurrentPriceViewModel>()
-    val historicalPricesViewModel = koinViewModel<HistoricalPricesViewModel>()
+	val currentPriceViewModel = koinViewModel<CurrentPriceViewModel>()
+	val historicalPricesViewModel = koinViewModel<HistoricalPricesViewModel>()
 
-    val currentPriceUiState by currentPriceViewModel.state.collectAsStateWithLifecycle()
-    val historicalPricesUiState by historicalPricesViewModel.state.collectAsStateWithLifecycle()
+	val currentPriceUiState by currentPriceViewModel.state.collectAsStateWithLifecycle()
+	val historicalPricesUiState by historicalPricesViewModel.state.collectAsStateWithLifecycle()
 
-    DisposableEffect(Unit) {
-        currentPriceViewModel.refresh()
-        historicalPricesViewModel.refresh()
-        onDispose { }
-    }
+	DisposableEffect(Unit) {
+		currentPriceViewModel.refresh()
+		historicalPricesViewModel.refresh()
+		onDispose { }
+	}
 
-    LifecycleResumeEffect(key1 = Unit, lifecycleOwner = LocalLifecycleOwner.current) {
-        currentPriceViewModel.startAutoRefresh()
-        onPauseOrDispose {
-            currentPriceViewModel.stopAutoRefresh()
-        }
-    }
+	LifecycleResumeEffect(key1 = Unit, lifecycleOwner = LocalLifecycleOwner.current) {
+		currentPriceViewModel.startAutoRefresh()
+		onPauseOrDispose {
+			currentPriceViewModel.stopAutoRefresh()
+		}
+	}
 
-    HomeScreenContent(
-        currentPriceUiState = currentPriceUiState,
-        historicalPricesUiState = historicalPricesUiState,
-        navigateToDetails = navigateToDetails
-    )
+	HomeScreenContent(
+		currentPriceUiState = currentPriceUiState,
+		historicalPricesUiState = historicalPricesUiState,
+		navigateToDetails = navigateToDetails,
+	)
 }
 
 @Composable
 internal fun HomeScreenContent(
-    currentPriceUiState: Resource<Double>,
-    historicalPricesUiState: Resource<List<HistoricalPriceDto>>,
-    navigateToDetails: (date: Long) -> Unit
+	currentPriceUiState: Resource<Double>,
+	historicalPricesUiState: Resource<List<HistoricalPriceDto>>,
+	navigateToDetails: (date: Long) -> Unit,
 ) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .systemBarsPadding()
-            .padding(DesignSystemTheme.measurements.spacing4)
-    ) {
-        Text(
-            text = stringResource(Res.string.bitcoinPriceTracker),
-            style = MaterialTheme.typography.titleLarge,
-            color = DesignSystemTheme.colors.brandColor,
-        )
-        Text(
-            text = stringResource(Res.string.madeWithLoveByN26),
-            style = MaterialTheme.typography.labelLarge,
-            color = Color.Gray,
-        )
-        Spacer(modifier = Modifier.height(DesignSystemTheme.measurements.spacing6))
+	Column(
+		modifier = Modifier
+			.fillMaxSize()
+			.systemBarsPadding()
+			.padding(DesignSystemTheme.measurements.spacing4),
+	) {
+		Text(
+			text = stringResource(Res.string.bitcoinPriceTracker),
+			style = MaterialTheme.typography.titleLarge,
+			color = DesignSystemTheme.colors.brandColor,
+		)
+		Text(
+			text = stringResource(Res.string.madeWithLoveByN26),
+			style = MaterialTheme.typography.labelLarge,
+			color = Color.Gray,
+		)
+		Spacer(modifier = Modifier.height(DesignSystemTheme.measurements.spacing6))
 
-        CurrentPriceComponent(currentPriceUiState)
+		CurrentPriceComponent(currentPriceUiState)
 
-        Spacer(modifier = Modifier.height(DesignSystemTheme.measurements.spacing6))
-        HistoricalPricesComponent(historicalPricesUiState, navigateToDetails)
-    }
+		Spacer(modifier = Modifier.height(DesignSystemTheme.measurements.spacing6))
+		HistoricalPricesComponent(historicalPricesUiState, navigateToDetails)
+	}
 }
 
 @Composable
-private fun CurrentPriceComponent(currentPriceUiState: Resource<Double>) {
-    ResourceContent(resource = currentPriceUiState, loadingContent = {
-        Box(
-            modifier = Modifier.fillMaxWidth().padding(DesignSystemTheme.measurements.spacing6),
-            contentAlignment = Alignment.Center
-        ) {
-            CircularProgressIndicator()
-        }
-    }) { price ->
-        AnimatedContent(targetState = price) { animatedPrice ->
-            Text(
-                text = stringResource(Res.string.usdValue, animatedPrice),
-                style = MaterialTheme.typography.displayLarge,
-                color = DesignSystemTheme.colors.brandColor,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = DesignSystemTheme.measurements.spacing1),
-                textAlign = TextAlign.Center,
-            )
-        }
+private fun CurrentPriceComponent(
+	currentPriceUiState: Resource<Double>,
+) {
+	ResourceContent(resource = currentPriceUiState, loadingContent = {
+		Box(
+			modifier = Modifier.fillMaxWidth().padding(DesignSystemTheme.measurements.spacing6),
+			contentAlignment = Alignment.Center,
+		) {
+			CircularProgressIndicator()
+		}
+	}) { price ->
+		AnimatedContent(targetState = price) { animatedPrice ->
+			Text(
+				text = stringResource(Res.string.usdValue, animatedPrice),
+				style = MaterialTheme.typography.displayLarge,
+				color = DesignSystemTheme.colors.brandColor,
+				modifier = Modifier
+					.fillMaxWidth()
+					.padding(top = DesignSystemTheme.measurements.spacing1),
+				textAlign = TextAlign.Center,
+			)
+		}
 
-        Text(
-            text = stringResource(Res.string.currentPriceUsd),
-            style = MaterialTheme.typography.labelLarge,
-            color = Color.Gray,
-            textAlign = TextAlign.Center,
-            modifier = Modifier.fillMaxWidth()
-        )
-    }
+		Text(
+			text = stringResource(Res.string.currentPriceUsd),
+			style = MaterialTheme.typography.labelLarge,
+			color = Color.Gray,
+			textAlign = TextAlign.Center,
+			modifier = Modifier.fillMaxWidth(),
+		)
+	}
 }
 
 @Composable
 private fun HistoricalPricesComponent(
-    historicalPricesUiState: Resource<List<HistoricalPriceDto>>,
-    navigateToDetails: (date: Long) -> Unit
+	historicalPricesUiState: Resource<List<HistoricalPriceDto>>,
+	navigateToDetails: (date: Long) -> Unit,
 ) {
-    Column {
-        Text(
-            text = stringResource(Res.string.historicalPrices),
-            style = MaterialTheme.typography.titleMedium,
-            color = Color.DarkGray,
-            modifier = Modifier.align(Alignment.Start)
-        )
+	Column {
+		Text(
+			text = stringResource(Res.string.historicalPrices),
+			style = MaterialTheme.typography.titleMedium,
+			color = Color.DarkGray,
+			modifier = Modifier.align(Alignment.Start),
+		)
 
-        ResourceContent(resource = historicalPricesUiState) { prices ->
-            if (prices.isNotEmpty()) {
-                LazyColumn(
-                    contentPadding = PaddingValues(vertical = DesignSystemTheme.measurements.spacing2),
-                    modifier = Modifier.fillMaxSize(),
-                    verticalArrangement = Arrangement.spacedBy(DesignSystemTheme.measurements.spacing3),
-                ) {
-                    items(prices, key = { it.utcTimestamp }) { priceDto ->
-                        HistoricalPriceItem(
-                            priceDto = priceDto,
-                            onClick = { navigateToDetails(priceDto.utcTimestamp) }
-                        )
-                    }
-                }
-            } else {
-                EmptyScreenContent(Modifier.fillMaxSize())
-            }
-        }
-    }
+		ResourceContent(resource = historicalPricesUiState) { prices ->
+			if (prices.isNotEmpty()) {
+				LazyColumn(
+					contentPadding = PaddingValues(vertical = DesignSystemTheme.measurements.spacing2),
+					modifier = Modifier.fillMaxSize(),
+					verticalArrangement = Arrangement.spacedBy(DesignSystemTheme.measurements.spacing3),
+				) {
+					items(prices, key = { it.utcTimestamp }) { priceDto ->
+						HistoricalPriceItem(
+							priceDto = priceDto,
+							onClick = { navigateToDetails(priceDto.utcTimestamp) },
+						)
+					}
+				}
+			} else {
+				EmptyScreenContent(Modifier.fillMaxSize())
+			}
+		}
+	}
 }
 
 @Composable
 private fun HistoricalPriceItem(
-    priceDto: HistoricalPriceDto,
-    modifier: Modifier = Modifier,
-    onClick: () -> Unit,
+	priceDto: HistoricalPriceDto,
+	onClick: () -> Unit,
+	modifier: Modifier = Modifier,
 ) {
-    Card(
-        modifier = modifier
-            .fillMaxWidth()
-            .clickable { onClick() },
-        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
-        colors = CardColors(
-            containerColor = DesignSystemTheme.colors.secondaryColor,
-            contentColor = Color.Unspecified,
-            disabledContainerColor = Color.Unspecified,
-            disabledContentColor = Color.Unspecified
-        )
-    ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .clickable { onClick() }
-                .padding(vertical = DesignSystemTheme.measurements.spacing4)
-        ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = DesignSystemTheme.measurements.spacing4),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Column(modifier = Modifier.weight(1f)) {
-                    Text(
-                        text = priceDto.localDate.toString(),
-                        style = MaterialTheme.typography.bodySmall,
-                        color = Color.DarkGray
-                    )
-                    Spacer(modifier = Modifier.height(DesignSystemTheme.measurements.spacing1))
-                    Text(
-                        text = stringResource(Res.string.usdValue, priceDto.price),
-                        style = MaterialTheme.typography.bodyLarge,
-                        color = DesignSystemTheme.colors.brandColor
-                    )
-                }
-                Icon(
-                    imageVector = Icons.AutoMirrored.Filled.ArrowForward,
-                    contentDescription = null,
-                    tint = Color.Gray
-                )
-            }
-        }
-    }
+	Card(
+		modifier = modifier
+			.fillMaxWidth()
+			.clickable { onClick() },
+		elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
+		colors = CardColors(
+			containerColor = DesignSystemTheme.colors.secondaryColor,
+			contentColor = Color.Unspecified,
+			disabledContainerColor = Color.Unspecified,
+			disabledContentColor = Color.Unspecified,
+		),
+	) {
+		Column(
+			modifier = Modifier
+				.fillMaxWidth()
+				.clickable { onClick() }
+				.padding(vertical = DesignSystemTheme.measurements.spacing4),
+		) {
+			Row(
+				modifier = Modifier
+					.fillMaxWidth()
+					.padding(horizontal = DesignSystemTheme.measurements.spacing4),
+				verticalAlignment = Alignment.CenterVertically,
+			) {
+				Column(modifier = Modifier.weight(1f)) {
+					Text(
+						text = priceDto.localDate.toString(),
+						style = MaterialTheme.typography.bodySmall,
+						color = Color.DarkGray,
+					)
+					Spacer(modifier = Modifier.height(DesignSystemTheme.measurements.spacing1))
+					Text(
+						text = stringResource(Res.string.usdValue, priceDto.price),
+						style = MaterialTheme.typography.bodyLarge,
+						color = DesignSystemTheme.colors.brandColor,
+					)
+				}
+				Icon(
+					imageVector = Icons.AutoMirrored.Filled.ArrowForward,
+					contentDescription = null,
+					tint = Color.Gray,
+				)
+			}
+		}
+	}
 }

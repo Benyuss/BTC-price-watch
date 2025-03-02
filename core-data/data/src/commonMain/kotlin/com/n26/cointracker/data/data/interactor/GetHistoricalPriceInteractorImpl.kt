@@ -10,32 +10,33 @@ import com.n26.data.common.BaseInteractor
 import kotlinx.datetime.LocalDate
 
 internal class GetHistoricalPriceInteractorImpl(
-    private val dispatchers: N26Dispatchers,
-    private val priceRemoteDataSource: PriceRemoteDataSource,
-    private val inMemoryCache: InMemoryCache<List<HistoricalPriceDto>>,
+	private val dispatchers: N26Dispatchers,
+	private val priceRemoteDataSource: PriceRemoteDataSource,
+	private val inMemoryCache: InMemoryCache<List<HistoricalPriceDto>>,
 ) : BaseInteractor(GetHistoricalPriceInteractor::class),
-    GetHistoricalPriceInteractor {
+	GetHistoricalPriceInteractor {
+	override suspend operator fun invoke(
+		fromDate: LocalDate,
+		toDate: LocalDate,
+	): Result<List<HistoricalPriceDto>> = execute(
+		dispatcher = dispatchers.io,
+		readCache = { inMemoryCache.getState() },
+		writeCache = { inMemoryCache.setState(it) },
+	) {
+		val allDataPoints = priceRemoteDataSource.getPricesFromDateToDate(fromDate, toDate)
 
-    override suspend operator fun invoke(
-        fromDate: LocalDate,
-        toDate: LocalDate
-    ): Result<List<HistoricalPriceDto>> = execute(
-        dispatcher = dispatchers.io,
-        readCache = { inMemoryCache.getState() },
-        writeCache = { inMemoryCache.setState(it) }
-    ) {
-        val allDataPoints = priceRemoteDataSource.getPricesFromDateToDate(fromDate, toDate)
+		val groupedByDay: Map<LocalDate, List<HistoricalPriceDto>> =
+			allDataPoints.groupBy {
+				it.utcTimestamp.toUtcDate()
+			}
 
-        val groupedByDay: Map<LocalDate, List<HistoricalPriceDto>> = allDataPoints.groupBy {
-            it.utcTimestamp.toUtcDate()
-        }
+		val dailyData =
+			groupedByDay.mapNotNull { (_, dayList) ->
+				dayList.maxByOrNull { dataPoint -> dataPoint.utcTimestamp }
+			}
 
-        val dailyData = groupedByDay.mapNotNull { (_, dayList) ->
-            dayList.maxByOrNull { dataPoint -> dataPoint.utcTimestamp }
-        }
+		val sortedDaily = dailyData.sortedByDescending { it.utcTimestamp }
 
-        val sortedDaily = dailyData.sortedByDescending { it.utcTimestamp }
-
-        Result.success(sortedDaily)
-    }
+		Result.success(sortedDaily)
+	}
 }

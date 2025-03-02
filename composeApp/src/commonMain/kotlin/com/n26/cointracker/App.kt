@@ -18,27 +18,28 @@ object HomeScreenDestination
 @Serializable
 data class PriceDetailsOnDayDestination(val dateTimestamp: Long)
 
+@Suppress("ktlint:compose:modifier-missing-check")
 @Composable
 fun ComposeApp() {
-    DesignSystemTheme {
-        Surface {
-            val navController: NavHostController = rememberNavController()
+	DesignSystemTheme {
+		Surface {
+			val navController: NavHostController = rememberNavController()
 
-            NavHost(navController = navController, startDestination = HomeScreenDestination) {
-                composable<HomeScreenDestination> {
-                    HomeScreen(navigateToDetails = { objectId ->
-                        navController.navigate(PriceDetailsOnDayDestination(objectId))
-                    })
-                }
-                composable<PriceDetailsOnDayDestination> { backStackEntry ->
-                    PriceDetailsOnDayScreen(
-                        dateTimeStamp = backStackEntry.toRoute<PriceDetailsOnDayDestination>().dateTimestamp,
-                        navigateBack = {
-                            navController.popBackStack()
-                        }
-                    )
-                }
-            }
-        }
-    }
+			NavHost(navController = navController, startDestination = HomeScreenDestination) {
+				composable<HomeScreenDestination> {
+					HomeScreen(navigateToDetails = { objectId ->
+						navController.navigate(PriceDetailsOnDayDestination(objectId))
+					})
+				}
+				composable<PriceDetailsOnDayDestination> { backStackEntry ->
+					PriceDetailsOnDayScreen(
+						dateTimeStamp = backStackEntry.toRoute<PriceDetailsOnDayDestination>().dateTimestamp,
+						navigateBack = {
+							navController.popBackStack()
+						},
+					)
+				}
+			}
+		}
+	}
 }

@@ -17,6 +17,11 @@ buildKonfig = "0.17.0"
 kermit = "2.0.4"
 kotlinxDateTime = "0.6.2"
 
+# Code formatting and static analysis
+spotless = "7.0.2"
+ktlint-core = "1.5.0"
+ktlint-compose = "0.4.22"
+
 [libraries]
 ## AndroidX & Compose
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
@@ -44,6 +49,9 @@ kermit = { module = "co.touchlab:kermit", version.ref = "kermit" }
 ## Build Tools
 buildKonfig-plugin = { module = "com.codingfeline.buildkonfig:buildkonfig-gradle-plugin", version.ref = "buildKonfig" }
 
+## Code formatting and static analysis
+ktlint-compose = { module = "com.diffplug.ktlint:ktlint-compose", version.ref = "ktlint-compose" }
+
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 androidLibrary = { id = "com.android.library", version.ref = "agp" }
@@ -52,3 +60,4 @@ composeMultiplatform = { id = "org.jetbrains.compose", version.ref = "compose-mu
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 kotlinxSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 buildKonfig = { id = "com.codingfeline.buildkonfig", version.ref = "buildKonfig" }
+spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }

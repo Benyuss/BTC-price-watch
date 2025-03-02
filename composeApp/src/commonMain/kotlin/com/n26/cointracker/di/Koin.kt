@@ -9,27 +9,29 @@ import kotlinx.coroutines.IO
 import org.koin.core.context.startKoin
 import org.koin.dsl.module
 
-val featureModule = module {
-    includes(homeModule)
-    includes(detailsModule)
-}
+val featureModule =
+	module {
+		includes(homeModule)
+		includes(detailsModule)
+	}
 
-val appModule = module {
-    single<N26Dispatchers> {
-        N26Dispatchers(
-            io = Dispatchers.IO,
-            default = Dispatchers.Default,
-            main = Dispatchers.Main,
-        )
-    }
-}
+val appModule =
+	module {
+		single<N26Dispatchers> {
+			N26Dispatchers(
+				io = Dispatchers.IO,
+				default = Dispatchers.Default,
+				main = Dispatchers.Main,
+			)
+		}
+	}
 
 fun initKoin() {
-    startKoin {
-        modules(
-            appModule,
-            dataModule,
-            featureModule,
-        )
-    }
+	startKoin {
+		modules(
+			appModule,
+			dataModule,
+			featureModule,
+		)
+	}
 }

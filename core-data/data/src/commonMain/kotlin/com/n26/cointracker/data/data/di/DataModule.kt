@@ -12,29 +12,30 @@ import com.n26.cointracker.data.network.di.networkModule
 import org.koin.core.qualifier.qualifier
 import org.koin.dsl.module
 
-val dataModule = module {
-    includes(inMemoryCacheModule)
-    includes(networkModule)
+val dataModule =
+	module {
+		includes(inMemoryCacheModule)
+		includes(networkModule)
 
-    single<GetHistoricalPriceInteractor> {
-        GetHistoricalPriceInteractorImpl(
-            dispatchers = get(),
-            priceRemoteDataSource = get(),
-            inMemoryCache = get(qualifier(DiConstants.CACHE_KEY_HISTORICAL_PRICE))
-        )
-    }
-    single<GetCurrentPriceInteractor> {
-        GetCurrentPriceInteractorImpl(
-            dispatchers = get(),
-            priceRemoteDataSource = get(),
-            inMemoryCache = get(qualifier(DiConstants.CACHE_KEY_CURRENT_PRICE))
-        )
-    }
-    single<GetPriceOnDayInteractor> {
-        GetPriceOnDayInteractorImpl(
-            dispatchers = get(),
-            priceRemoteDataSource = get(),
-            inMemoryCache = get(qualifier(DiConstants.CACHE_KEY_PRICE_ON_DAY))
-        )
-    }
-}
+		single<GetHistoricalPriceInteractor> {
+			GetHistoricalPriceInteractorImpl(
+				dispatchers = get(),
+				priceRemoteDataSource = get(),
+				inMemoryCache = get(qualifier(DiConstants.CACHE_KEY_HISTORICAL_PRICE)),
+			)
+		}
+		single<GetCurrentPriceInteractor> {
+			GetCurrentPriceInteractorImpl(
+				dispatchers = get(),
+				priceRemoteDataSource = get(),
+				inMemoryCache = get(qualifier(DiConstants.CACHE_KEY_CURRENT_PRICE)),
+			)
+		}
+		single<GetPriceOnDayInteractor> {
+			GetPriceOnDayInteractorImpl(
+				dispatchers = get(),
+				priceRemoteDataSource = get(),
+				inMemoryCache = get(qualifier(DiConstants.CACHE_KEY_PRICE_ON_DAY)),
+			)
+		}
+	}

@@ -14,33 +14,35 @@ import n26bitcoinwatch.core_ui.common_ui.generated.resources.Res
 import n26bitcoinwatch.core_ui.common_ui.generated.resources.somethingWentWrong
 import org.jetbrains.compose.resources.stringResource
 
+@Suppress("ktlint:compose:modifier-missing-check")
 @Composable
 fun <T> ResourceContent(
-    resource: Resource<T>,
-    loadingContent: @Composable () -> Unit = {
-        Box(
-            modifier = Modifier.fillMaxSize(),
-            contentAlignment = Alignment.Center
-        ) {
-            CircularProgressIndicator()
-        }
-    },
-    errorContent: @Composable (Throwable) -> Unit = {
-        Box(
-            modifier = Modifier.fillMaxSize()
-                .padding(16.dp),
-            contentAlignment = Alignment.Center
-        ) {
-            Text(
-                text = stringResource(Res.string.somethingWentWrong)
-            )
-        }
-    },
-    successContent: @Composable (T) -> Unit
+	resource: Resource<T>,
+	loadingContent: @Composable () -> Unit = {
+		Box(
+			modifier = Modifier.fillMaxSize(),
+			contentAlignment = Alignment.Center,
+		) {
+			CircularProgressIndicator()
+		}
+	},
+	errorContent: @Composable (Throwable) -> Unit = {
+		Box(
+			modifier = Modifier
+				.fillMaxSize()
+				.padding(16.dp),
+			contentAlignment = Alignment.Center,
+		) {
+			Text(
+				text = stringResource(Res.string.somethingWentWrong),
+			)
+		}
+	},
+	successContent: @Composable (T) -> Unit,
 ) {
-    when (resource) {
-        is Resource.Loading -> loadingContent()
-        is Resource.Error -> errorContent(resource.throwable)
-        is Resource.Success -> successContent(resource.data)
-    }
+	when (resource) {
+		is Resource.Loading -> loadingContent()
+		is Resource.Error -> errorContent(resource.throwable)
+		is Resource.Success -> successContent(resource.data)
+	}
 }

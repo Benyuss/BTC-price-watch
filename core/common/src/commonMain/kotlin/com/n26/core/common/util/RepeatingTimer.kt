@@ -7,14 +7,14 @@ import kotlin.coroutines.CoroutineContext
 import kotlin.time.Duration
 
 fun CoroutineScope.repeatingTimer(
-    duration: Duration,
-    context: CoroutineContext,
-    action: suspend () -> Unit,
+	duration: Duration,
+	context: CoroutineContext,
+	action: suspend () -> Unit,
 ) {
-    launch(context) {
-        while (true) {
-            delay(duration)
-            action()
-        }
-    }
+	launch(context) {
+		while (true) {
+			delay(duration)
+			action()
+		}
+	}
 }

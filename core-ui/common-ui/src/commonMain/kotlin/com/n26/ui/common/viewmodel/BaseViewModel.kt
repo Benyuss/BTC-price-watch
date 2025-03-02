@@ -8,19 +8,20 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 abstract class BaseViewModel<T> : ViewModel() {
+	private val _state: MutableStateFlow<Resource<T>> = MutableStateFlow(Resource.Loading)
+	val state: StateFlow<Resource<T>> = _state
 
-    private val _state: MutableStateFlow<Resource<T>> = MutableStateFlow(Resource.Loading)
-    val state: StateFlow<Resource<T>> = _state
+	protected fun refreshData(
+		action: suspend () -> Result<T>,
+	) {
+		viewModelScope.launch {
+			_state.value = Resource.Loading
 
-    protected fun refreshData(action: suspend () -> Result<T>) {
-        viewModelScope.launch {
-            _state.value = Resource.Loading
-
-            action().fold(onSuccess = {
-                _state.value = Resource.Success(it)
-            }, onFailure = {
-                _state.value = Resource.Error(it)
-            })
-        }
-    }
+			action().fold(onSuccess = {
+				_state.value = Resource.Success(it)
+			}, onFailure = {
+				_state.value = Resource.Error(it)
+			})
+		}
+	}
 }

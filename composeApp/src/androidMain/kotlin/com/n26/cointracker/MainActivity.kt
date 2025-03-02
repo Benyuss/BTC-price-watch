@@ -8,15 +8,17 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.LaunchedEffect
 
 class MainActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContent {
-            // Remove when https://issuetracker.google.com/issues/364713509 is fixed
-            LaunchedEffect(isSystemInDarkTheme()) {
-                enableEdgeToEdge()
-            }
-            ComposeApp()
-        }
-    }
+	override fun onCreate(
+		savedInstanceState: Bundle?,
+	) {
+		super.onCreate(savedInstanceState)
+		enableEdgeToEdge()
+		setContent {
+			// Remove when https://issuetracker.google.com/issues/364713509 is fixed
+			LaunchedEffect(isSystemInDarkTheme()) {
+				enableEdgeToEdge()
+			}
+			ComposeApp()
+		}
+	}
 }

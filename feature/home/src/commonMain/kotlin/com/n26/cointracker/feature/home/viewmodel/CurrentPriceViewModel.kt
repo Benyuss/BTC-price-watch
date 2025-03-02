@@ -11,32 +11,31 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.plus
 import kotlin.time.Duration.Companion.minutes
 
-class CurrentPriceViewModel(
-    private val getCurrentPriceInteractor: GetCurrentPriceInteractor
-) : BaseViewModel<Double>() {
+class CurrentPriceViewModel(private val getCurrentPriceInteractor: GetCurrentPriceInteractor) : BaseViewModel<Double>() {
+	private val autoRefreshScope = viewModelScope + SupervisorJob()
 
-    private val autoRefreshScope = viewModelScope + SupervisorJob()
+	fun refresh(
+		forceRefresh: Boolean = false,
+	) {
+		refreshData {
+			getCurrentPriceInteractor(forceRefresh).map { priceDto -> priceDto.usd }
+		}
+	}
 
-    fun refresh(forceRefresh: Boolean = false) {
-        refreshData {
-            getCurrentPriceInteractor(forceRefresh).map { priceDto -> priceDto.usd }
-        }
-    }
+	fun startAutoRefresh() {
+		autoRefreshScope.launch {
+			repeatingTimer(duration = 1.minutes, context = autoRefreshScope.coroutineContext) {
+				refresh(forceRefresh = true)
+			}
+		}
+	}
 
-    fun startAutoRefresh() {
-        autoRefreshScope.launch {
-            repeatingTimer(duration = 1.minutes, context = autoRefreshScope.coroutineContext) {
-                refresh(forceRefresh = true)
-            }
-        }
-    }
+	fun stopAutoRefresh() {
+		autoRefreshScope.coroutineContext.cancelChildren()
+	}
 
-    fun stopAutoRefresh() {
-        autoRefreshScope.coroutineContext.cancelChildren()
-    }
-
-    override fun onCleared() {
-        autoRefreshScope.cancel()
-        super.onCleared()
-    }
+	override fun onCleared() {
+		autoRefreshScope.cancel()
+		super.onCleared()
+	}
 }

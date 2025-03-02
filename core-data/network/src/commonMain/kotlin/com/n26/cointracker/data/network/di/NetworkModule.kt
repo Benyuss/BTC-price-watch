@@ -13,26 +13,29 @@ import kotlinx.serialization.json.Json
 import org.koin.dsl.module
 import co.touchlab.kermit.Logger as KermitLogger
 
-val networkModule = module {
+val networkModule =
+	module {
 
-    single {
-        val json = Json { ignoreUnknownKeys = true }
-        HttpClient {
-            install(ContentNegotiation) {
-                json(json, contentType = ContentType.Application.Json)
-            }
+		single {
+			val json = Json { ignoreUnknownKeys = true }
+			HttpClient {
+				install(ContentNegotiation) {
+					json(json, contentType = ContentType.Application.Json)
+				}
 
-            install(Logging) {
-                level = LogLevel.HEADERS
-                logger = object : Logger {
-                    override fun log(message: String) {
-                        KermitLogger.d("Http Client: $message")
-                    }
-                }
-            }
-        }
-    }
+				install(Logging) {
+					level = LogLevel.HEADERS
+					logger =
+						object : Logger {
+							override fun log(
+								message: String,
+							) {
+								KermitLogger.d("Http Client: $message")
+							}
+						}
+				}
+			}
+		}
 
-    single<PriceRemoteDataSource> { PriceRemoteDataSourceImpl(get()) }
-
-}
+		single<PriceRemoteDataSource> { PriceRemoteDataSourceImpl(get()) }
+	}
