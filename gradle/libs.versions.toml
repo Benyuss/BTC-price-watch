@@ -22,6 +22,11 @@ spotless = "7.0.2"
 ktlint-core = "1.5.0"
 ktlint-compose = "0.4.22"
 
+# Testing
+kotest = "5.9.1"
+turbine = "1.2.0"
+mockk = "1.13.17"
+
 [libraries]
 ## AndroidX & Compose
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
@@ -52,6 +57,15 @@ buildKonfig-plugin = { module = "com.codingfeline.buildkonfig:buildkonfig-gradle
 ## Code formatting and static analysis
 ktlint-compose = { module = "com.diffplug.ktlint:ktlint-compose", version.ref = "ktlint-compose" }
 
+# Testing
+kotest-framework-engine = { module = "io.kotest:kotest-framework-engine", version.ref = "kotest" }
+kotest-assertions-core = { module = "io.kotest:kotest-assertions-core", version.ref = "kotest" }
+kotest-junit = { module = "io.kotest:kotest-runner-junit5", version.ref = "kotest" }
+turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
+mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
+kotlin-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
+ktor-client-mock = { module = "io.ktor:ktor-client-mock", version.ref = "ktor" }
+
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 androidLibrary = { id = "com.android.library", version.ref = "agp" }
@@ -61,3 +75,4 @@ kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref =
 kotlinxSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 buildKonfig = { id = "com.codingfeline.buildkonfig", version.ref = "buildKonfig" }
 spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
+kotest = { id = "io.kotest.multiplatform", version.ref = "kotest" }

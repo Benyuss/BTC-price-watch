@@ -4,6 +4,7 @@ plugins {
 	alias(libs.plugins.kotlinMultiplatform)
 	alias(libs.plugins.androidLibrary)
 	alias(libs.plugins.kotlinxSerialization)
+	alias(libs.plugins.kotest)
 }
 
 kotlin {
@@ -25,6 +26,15 @@ kotlin {
 	}
 
 	sourceSets {
+		androidUnitTest.dependencies {
+			implementation(libs.kotest.framework.engine)
+			implementation(libs.kotest.assertions.core)
+			implementation(libs.kotest.junit)
+
+			implementation(libs.turbine)
+			implementation(kotlin("test"))
+		}
+
 		commonMain.dependencies {
 			implementation(projects.core.common)
 
@@ -39,6 +49,10 @@ kotlin {
 			implementation(libs.kotlinx.datetime)
 		}
 	}
+}
+
+tasks.withType<Test>().configureEach {
+	useJUnitPlatform()
 }
 
 android {

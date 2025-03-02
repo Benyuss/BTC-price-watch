@@ -7,6 +7,7 @@ plugins {
 	alias(libs.plugins.androidLibrary)
 	alias(libs.plugins.kotlinxSerialization)
 	alias(libs.plugins.buildKonfig)
+	alias(libs.plugins.kotest)
 }
 
 kotlin {
@@ -29,13 +30,29 @@ kotlin {
 	}
 
 	sourceSets {
+		// todo add ci check task
+		androidUnitTest.dependencies {
+			implementation(libs.kotest.framework.engine)
+			implementation(libs.kotest.assertions.core)
+			implementation(libs.kotest.junit)
+
+			implementation(libs.kotlin.coroutines.test)
+			implementation(libs.mockk)
+
+			implementation(libs.ktor.client.mock)
+
+			implementation(libs.turbine)
+			implementation(kotlin("test"))
+		}
+
 		iosMain.dependencies {
-			// todo write unit tests + run on CI
 			implementation(libs.ktor.client.darwin)
 		}
+
 		androidMain.dependencies {
 			implementation(libs.ktor.client.okhttp)
 		}
+
 		commonMain.dependencies {
 			implementation(projects.core.common)
 			implementation(projects.core.domain)
@@ -62,6 +79,10 @@ android {
 		sourceCompatibility = JavaVersion.VERSION_17
 		targetCompatibility = JavaVersion.VERSION_17
 	}
+}
+
+tasks.withType<Test>().configureEach {
+	useJUnitPlatform()
 }
 
 buildkonfig {

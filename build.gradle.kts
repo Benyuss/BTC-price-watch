@@ -17,10 +17,17 @@ plugins {
 	alias(libs.plugins.kotlinMultiplatform) apply false
 	alias(libs.plugins.kotlinxSerialization) apply false
 	alias(libs.plugins.buildKonfig) apply false
-	alias(libs.plugins.spotless)
+	alias(libs.plugins.kotest) apply false
+	alias(libs.plugins.spotless) apply false
 }
 
 subprojects {
+	repositories {
+		mavenCentral()
+		google()
+		gradlePluginPortal()
+	}
+
 	apply(plugin = rootProject.libs.plugins.spotless.get().pluginId)
 
 	tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().all {
