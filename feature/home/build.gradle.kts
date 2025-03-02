@@ -6,6 +6,7 @@ plugins {
 	alias(libs.plugins.composeMultiplatform)
 	alias(libs.plugins.composeCompiler)
 	alias(libs.plugins.kotlinxSerialization)
+	alias(libs.plugins.kotest)
 }
 
 kotlin {
@@ -31,6 +32,19 @@ kotlin {
 			implementation(libs.androidx.compose.ui.tooling.preview)
 			implementation(libs.androidx.activity.compose)
 		}
+
+		androidUnitTest.dependencies {
+			implementation(libs.kotest.framework.engine)
+			implementation(libs.kotest.assertions.core)
+			implementation(libs.kotest.junit)
+
+			implementation(libs.kotlin.coroutines.test)
+			implementation(libs.mockk)
+
+			implementation(libs.turbine)
+			implementation(kotlin("test"))
+		}
+
 		commonMain.dependencies {
 			implementation(libs.kotlinx.datetime)
 			implementation(libs.kotlinx.coroutines)
@@ -52,6 +66,10 @@ kotlin {
 			implementation(projects.coreUi.designSystem)
 		}
 	}
+}
+
+tasks.withType<Test>().configureEach {
+	useJUnitPlatform()
 }
 
 android {
