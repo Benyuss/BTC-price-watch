@@ -116,14 +116,17 @@ internal fun HomeScreenContent(
 private fun CurrentPriceComponent(
 	currentPriceUiState: Resource<Double>,
 ) {
-	ResourceContent(resource = currentPriceUiState, loadingContent = {
-		Box(
-			modifier = Modifier.fillMaxWidth().padding(DesignSystemTheme.measurements.spacing6),
-			contentAlignment = Alignment.Center,
-		) {
-			CircularProgressIndicator()
-		}
-	}) { price ->
+	ResourceContent(
+		resource = currentPriceUiState,
+		loadingContent = {
+			Box(
+				modifier = Modifier.fillMaxWidth().padding(DesignSystemTheme.measurements.spacing6),
+				contentAlignment = Alignment.Center,
+			) {
+				CircularProgressIndicator()
+			}
+		},
+	) { price ->
 		AnimatedContent(targetState = price) { animatedPrice ->
 			Text(
 				text = stringResource(Res.string.usdValue, animatedPrice),

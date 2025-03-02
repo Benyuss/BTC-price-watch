@@ -17,11 +17,14 @@ abstract class BaseViewModel<T> : ViewModel() {
 		viewModelScope.launch {
 			_state.value = Resource.Loading
 
-			action().fold(onSuccess = {
-				_state.value = Resource.Success(it)
-			}, onFailure = {
-				_state.value = Resource.Error(it)
-			})
+			action().fold(
+				onSuccess = {
+					_state.value = Resource.Success(it)
+				},
+				onFailure = {
+					_state.value = Resource.Error(it)
+				},
+			)
 		}
 	}
 }

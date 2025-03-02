@@ -27,9 +27,11 @@ fun ComposeApp() {
 
 			NavHost(navController = navController, startDestination = HomeScreenDestination) {
 				composable<HomeScreenDestination> {
-					HomeScreen(navigateToDetails = { objectId ->
-						navController.navigate(PriceDetailsOnDayDestination(objectId))
-					})
+					HomeScreen(
+						navigateToDetails = { objectId ->
+							navController.navigate(PriceDetailsOnDayDestination(objectId))
+						},
+					)
 				}
 				composable<PriceDetailsOnDayDestination> { backStackEntry ->
 					PriceDetailsOnDayScreen(
