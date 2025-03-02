@@ -9,7 +9,7 @@ on:
 jobs:
   test:
     name: Build
-    runs-on: macOS-latest
+    runs-on: macos-14-arm64
     # Only run build in template repo
     if: github.event.repository.name == 'BTC-price-watch' && github.repository_owner == 'Benyuss'
     steps:
@@ -23,4 +23,4 @@ jobs:
       - name: Set Xcode version
         run: sudo xcode-select -s /Applications/Xcode_16.2.app/Contents/Developer
       - name: iOS debug build
-        run: cd iosApp && xcodebuild -scheme iosApp -configuration Debug -destination 'platform=iOS Simulator,OS=latest,name=iPhone 16' CODE_SIGNING_ALLOWED='NO'
+        run: cd iosApp && xcodebuild -scheme iosApp -configuration Debug -destination 'platform=iOS Simulator,OS=latest,name=iPhone 15' CODE_SIGNING_ALLOWED='NO'
