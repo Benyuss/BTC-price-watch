@@ -151,6 +151,16 @@ range.
 
 ---
 
+## Testing & Code Quality
+
+- **Testing:**  
+  The project uses [Kotest](https://kotest.io/) and [MockK](https://mockk.io/) for testing. Kotest provides a BDD-style API that makes tests expressive and easy to maintain. Tests are automatically run during Gradle's `check` task.
+
+- **Code Formatting:**  
+  Spotless is integrated with [ktlint](https://ktlint.github.io/) to ensure consistent code formatting. It is recommended to install the ktlint plugin in Android Studio for instant feedback. Code formatting is verified using the `spotlessCheck` task.
+
+---
+
 ## License
 
 This project is licensed under the Apache License, Version 2.0. See [LICENSE](LICENSE) for details.
