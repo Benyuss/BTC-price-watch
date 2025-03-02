@@ -22,3 +22,5 @@ jobs:
                     java-version: 21
             -   name: Android debug build
                 run: ./gradlew assembleDebug --stacktrace
+            -   name: Run Gradle Check
+                run: ./gradlew check --rerun-tasks --stacktrace
