@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<resources>
+    <string name="back">Navigate back</string>
+    <string name="noDataAvailable">No data available</string>
+    <string name="somethingWentWrong">Something went wrong.\nConsider checking your API rate limits and try again later!</string>
+</resources>

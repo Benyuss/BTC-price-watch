@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<resources>
+    <string name="bitcoinPriceTracker">Bitcoin Price Tracker</string>
+    <string name="madeWithLoveByN26">Made with ❤ by N26</string>
+    <string name="currentPriceUsd">Current Price (USD)</string>
+    <string name="historicalPrices">Historical Prices</string>
+    <string name="usdValue">$%1$d</string>
+</resources>

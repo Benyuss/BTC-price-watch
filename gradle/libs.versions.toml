@@ -1,0 +1,54 @@
+[versions]
+# Core tools and language
+agp = "8.8.2"
+kotlin = "2.0.21"
+compose-multiplatform = "1.7.0"
+coroutines = "1.10.1"
+
+# AndroidX and Compose
+androidx-activityCompose = "1.10.1"
+androidx-ui-tooling = "1.7.8"
+navigationCompose = "2.8.0-alpha10"
+
+# Libraries for DI, networking, etc.
+koin = "4.0.2"
+ktor = "3.1.1"
+buildKonfig = "0.17.0"
+kermit = "2.0.4"
+kotlinxDateTime = "0.6.2"
+
+[libraries]
+## AndroidX & Compose
+androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
+androidx-compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "androidx-ui-tooling" }
+androidx-compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "androidx-ui-tooling" }
+navigation-compose = { module = "org.jetbrains.androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
+
+## Dependency Injection
+koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
+koin-compose-viewmodel = { module = "io.insert-koin:koin-compose-viewmodel", version.ref = "koin" }
+
+## Networking (Ktor)
+ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
+ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
+ktor-client-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor" }
+ktor-client-darwin = { module = "io.ktor:ktor-client-darwin", version.ref = "ktor" }
+ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
+ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
+
+## Utilities & Concurrency
+kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinxDateTime" }
+kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
+kermit = { module = "co.touchlab:kermit", version.ref = "kermit" }
+
+## Build Tools
+buildKonfig-plugin = { module = "com.codingfeline.buildkonfig:buildkonfig-gradle-plugin", version.ref = "buildKonfig" }
+
+[plugins]
+androidApplication = { id = "com.android.application", version.ref = "agp" }
+androidLibrary = { id = "com.android.library", version.ref = "agp" }
+composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+composeMultiplatform = { id = "org.jetbrains.compose", version.ref = "compose-multiplatform" }
+kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+kotlinxSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+buildKonfig = { id = "com.codingfeline.buildkonfig", version.ref = "buildKonfig" }
