@@ -1,4 +1,3 @@
-import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 // todo conventions
@@ -11,9 +10,8 @@ plugins {
 
 kotlin {
 	androidTarget {
-		@OptIn(ExperimentalKotlinGradlePluginApi::class)
 		compilerOptions {
-			jvmTarget.set(JvmTarget.JVM_11)
+			jvmTarget.set(JvmTarget.JVM_17)
 		}
 	}
 
